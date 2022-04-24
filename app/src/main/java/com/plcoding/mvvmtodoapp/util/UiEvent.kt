@@ -3,8 +3,8 @@ package com.plcoding.mvvmtodoapp.util
 sealed class UiEvent {
     object PopBackStack: UiEvent()
     data class Navigate(val route: String): UiEvent()
-    data class ShowSnackbar(
+    data class ShowSnackBar(
         val message: String,
-        val action: String? = null
+        val action: String? = null,
     ): UiEvent()
 }

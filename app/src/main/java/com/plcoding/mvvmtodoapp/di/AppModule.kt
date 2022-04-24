@@ -2,7 +2,6 @@ package com.plcoding.mvvmtodoapp.di
 
 import android.app.Application
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.plcoding.mvvmtodoapp.data.TodoDatabase
 import com.plcoding.mvvmtodoapp.data.TodoRepository
 import com.plcoding.mvvmtodoapp.data.TodoRepositoryImpl
@@ -29,6 +28,6 @@ object AppModule {
     @Provides
     @Singleton
     fun provideTodoRepository(db: TodoDatabase): TodoRepository {
-        return TodoRepositoryImpl(db.dao)
+        return TodoRepositoryImpl(db.dao);
     }
 }

@@ -15,17 +15,17 @@ import javax.inject.Inject
 @HiltViewModel
 class TodoListViewModel @Inject constructor(
     private val repository: TodoRepository
-): ViewModel() {
+) : ViewModel() {
 
     val todos = repository.getTodos()
 
-    private val _uiEvent =  Channel<UiEvent>()
+    private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
 
     private var deletedTodo: Todo? = null
 
     fun onEvent(event: TodoListEvent) {
-        when(event) {
+        when (event) {
             is TodoListEvent.OnTodoClick -> {
                 sendUiEvent(UiEvent.Navigate(Routes.ADD_EDIT_TODO + "?todoId=${event.todo.id}"))
             }
@@ -43,10 +43,12 @@ class TodoListViewModel @Inject constructor(
                 viewModelScope.launch {
                     deletedTodo = event.todo
                     repository.deleteTodo(event.todo)
-                    sendUiEvent(UiEvent.ShowSnackbar(
-                        message = "Todo deleted",
-                        action = "Undo"
-                    ))
+                    sendUiEvent(
+                        UiEvent.ShowSnackBar(
+                            message = "Todo deleted",
+                            action = "Undo",
+                        )
+                    )
                 }
             }
             is TodoListEvent.OnDoneChange -> {
@@ -66,4 +68,5 @@ class TodoListViewModel @Inject constructor(
             _uiEvent.send(event)
         }
     }
+
 }

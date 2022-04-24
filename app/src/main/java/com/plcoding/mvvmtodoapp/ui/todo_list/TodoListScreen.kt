@@ -27,17 +27,17 @@ fun TodoListScreen(
     val scaffoldState = rememberScaffoldState()
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { event ->
-            when(event) {
-                is UiEvent.ShowSnackbar -> {
+            when (event) {
+                is UiEvent.Navigate -> onNavigate(event)
+                is UiEvent.ShowSnackBar -> {
                     val result = scaffoldState.snackbarHostState.showSnackbar(
                         message = event.message,
-                        actionLabel = event.action
+                        actionLabel = event.action,
                     )
-                    if(result == SnackbarResult.ActionPerformed) {
+                    if (result == SnackbarResult.ActionPerformed) {
                         viewModel.onEvent(TodoListEvent.OnUndoDeleteClick)
                     }
                 }
-                is UiEvent.Navigate -> onNavigate(event)
                 else -> Unit
             }
         }
